@@ -27,7 +27,21 @@ class Blockchain {
         newBlock.hash = newBlock.calculateHash();
         this.chain.push(newBlock);
     }
+    chainValid() {
+        for (var i = 1; i < this.chain.length; i++) {
+            let currentBlock = this.chain[i];
+            let previousBlock = this.chain[i - 1];
+            if (currentBlock.hash !== currentBlock.calculateHash()) {
+                return false;
+            }
+            if (currentBlock.previousHash !== previousBlock.hash) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
 
 let savjeCoin = new Blockchain();
 savjeCoin.addBlock(new Block(1, "03/05/2018", { amount: 5 }));
